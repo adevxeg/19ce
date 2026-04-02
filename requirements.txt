@@ -1,0 +1,12 @@
+python-barcode ;
+rlPyCairo ;
+openpyxl ;
+imgkit==1.2.3 ;
+psycopg2-binary ;
+pdfminer.six ;
+num2words ;
+ofxparse ;
+dbfread ;
+ebaysdk ;
+firebase_admin ;
+pyOpenSSL ;

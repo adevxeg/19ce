@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sales_brand,access.sales.brand,model_sales_brand,,1,1,1,1
+access_partner_warehouse,access.partner.warehouse,model_partner_warehouse,,1,1,1,1
+access_sales_brand_report_wizard,access.sales.brand.report.wizard,model_sales_brand_report_wizard,,1,1,1,1
+access_sales_brand_report,access.sales.brand.report,model_sales_brand_report,,1,1,1,1

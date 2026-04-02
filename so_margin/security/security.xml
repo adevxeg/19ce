@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="res_groups_privilege_sale_margin" model="res.groups.privilege">
+            <field name="name">Sale Margin</field>
+            <field name="category_id" ref="adevx_base.adevx_sales_category"/>
+            <field name="sequence">1</field>
+            <field name="is_adevx" eval="True"/>
+        </record>
+        <record id="group_sale_margin" model="res.groups">
+            <field name="name">Show</field>
+            <field name="is_adevx" eval="True"/>
+            <field name="comment">Show Sale Margin.</field>
+            <field name="privilege_id" ref="res_groups_privilege_sale_margin"/>
+        </record>
+
+    </data>
+</odoo>

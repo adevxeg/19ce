@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="view_inherit_account_payment_form" model="ir.ui.view">
+            <field name="name">view.inherit.account.payment.form</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account_check_printing.view_account_payment_form_inherited"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='print_checks']" position="attributes">
+                    <attribute name="invisible">
+                        payment_method_code not in ['check_printing', 'pdc'] or is_sent or not check_layout_available
+                    </attribute>
+                </xpath>
+                <xpath expr="//button[@name='unmark_as_sent']" position="attributes">
+                    <attribute name="invisible">
+                        payment_method_code not in ['check_printing', 'pdc'] or not is_sent
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='check_amount_in_words']" position="attributes">
+                    <attribute name="invisible">payment_method_code not in ['check_printing', 'pdc']</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date']" position="after">
+                    <field name="effective_date"
+                           invisible="payment_method_code != 'pdc'"
+                           required="payment_method_code == 'pdc'"/>
+                    <field name="bank_reference" readonly="state != 'draft'"/>
+                    <field name="cheque_reference" readonly="state != 'draft'"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_inherit_account_payment_search" model="ir.ui.view">
+            <field name="name">view.inherit.account.payment.search</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account_check_printing.view_payment_check_printing_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='checks_to_send']" position="attributes">
+                    <attribute name="domain">[('payment_method_id.code', 'in', ['check_printing', 'pdc']), ('state', '=', 'paid'), ('is_sent', '=', False)]</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

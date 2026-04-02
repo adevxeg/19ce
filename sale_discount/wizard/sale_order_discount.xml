@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="view_inherit_sale_order_discount_form" model="ir.ui.view">
+            <field name="name">view.inherit.sale.order.discount.form</field>
+            <field name="model">sale.order.discount</field>
+            <field name="inherit_id" ref="sale.sale_order_line_wizard_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='currency_id']" position="after">
+                    <field name="sale_discount_type" invisible="1"/>
+                </xpath>
+                <xpath expr="//div[hasclass('row')]" position="before">
+                    <div class="col-12">
+                        <group>
+                            <field name="discount_mode" widget="radio" options="{'horizontal': True}"
+                                   invisible="sale_discount_type != 'adevx'"/>
+                        </group>
+                    </div>
+                </xpath>
+                <xpath expr="//label[@for='discount_amount']" position="attributes">
+                    <attribute name="invisible">discount_mode != 'amount'</attribute>
+                </xpath>
+                <xpath expr="//field[@name='discount_amount']" position="attributes">
+                    <attribute name="invisible">discount_mode != 'amount'</attribute>
+                </xpath>
+                <xpath expr="//label[@for='discount_percentage']" position="attributes">
+                    <attribute name="invisible">discount_mode != 'percentage'</attribute>
+                </xpath>
+                <xpath expr="//field[@name='discount_percentage']" position="attributes">
+                    <attribute name="invisible">discount_mode != 'percentage'</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

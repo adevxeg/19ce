@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="view_inherit_res_config_settings_form" model="ir.ui.view">
+            <field name="name">view.inherit.res.config.settings.form</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="adevx_base.view_inherit_res_config_settings_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='sales']" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                </xpath>
+                <xpath expr="//page[@name='sales']//block[@id='sales_general']" position="inside">
+                    <setting help="Automatically confirm sales order and picking, and invoice">
+                        <field name="one_step_sale"/>
+                    </setting>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

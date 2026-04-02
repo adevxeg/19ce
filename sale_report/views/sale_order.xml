@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="view_inherit_sale_report_search" model="ir.ui.view">
+            <field name="name">view.inherit.sale.report.search</field>
+            <field name="model">sale.report</field>
+            <field name="inherit_id" ref="sale.view_order_product_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+                    <filter name="qty_delivered" string="Qty Delivered"
+                            domain="[('qty_delivered','!=',0)]"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="sale.action_order_report_all" model="ir.actions.act_window">
+            <field name="context">{
+                'search_default_Sales':1,
+                'group_by':[],
+                'search_default_filter_order_date': 1,
+                'search_default_qty_delivered': 1
+                }
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="view_inherit_res_config_settings_form" model="ir.ui.view">
+            <field name="name">view.inherit.res.config.settings.form</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="adevx_base.view_inherit_res_config_settings_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='sales']" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                </xpath>
+                <xpath expr="//page[@name='sales']//block[@id='sales_general']" position="after">
+                    <block title="Discount" id="sales_discount">
+                        <setting help="Select discount type for sales order lines">
+                            <field name="sale_discount_type"/>
+                        </setting>
+                        <setting help="Default product used for sale discounts">
+                            <field name="sale_discount_product_id"/>
+                        </setting>
+                    </block>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

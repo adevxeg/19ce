@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="view_sales_brand_report_wizard_form" model="ir.ui.view">
+            <field name="name">view.sales.brand.report.wizard.form</field>
+            <field name="model">sales.brand.report.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="type"/>
+                            <field name="partner_ids" widget="many2many_tags" placeholder="All Partners"
+                                   options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"/>
+                        </group>
+                        <group>
+                            <field name="start_date" readonly="type != 'specific'" force_save="1"/>
+                            <field name="end_date" readonly="type != 'specific'" force_save="1"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="action_preview" string="Preview Report" type="object" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_sales_brand_report_wizard_view" model="ir.actions.act_window">
+            <field name="name">Brand Report</field>
+            <field name="res_model">sales.brand.report.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        <menuitem id="menu_sales_brand_report_wizard"
+                  action="action_sales_brand_report_wizard_view"
+                  groups="sales_brand_management.group_sales_brand_management"
+                  parent="sale.menu_sale_report"
+                  sequence="30"/>
+
+    </data>
+</odoo>

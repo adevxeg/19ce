@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+
+    <t t-name="account_reports.ExternalDBFilters" t-inherit="account_reports.AccountReportFiltersCustomizable">
+        <xpath expr="//div[@id='filter_extra_options']" position="before">
+            <Dropdown>
+                <button class="btn btn-secondary">
+                    <i class="fa fa-database me-1"/>External BD
+                </button>
+                <t t-set-slot="content">
+                    <DropdownItem
+                        class="{ 'selected': this.controller.cachedFilterOptions['merge_external_db'] }"
+                        onSelected="() => this.filterClicked({ optionKey: 'merge_external_db', reload: true})"
+                        closingMode="'none'">
+                        Reda DB
+                    </DropdownItem>
+                </t>
+            </Dropdown>
+        </xpath>
+    </t>
+
+</templates>

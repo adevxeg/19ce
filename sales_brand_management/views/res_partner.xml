@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="view_inherit_res_partner_form" model="ir.ui.view">
+            <field name="name">view.inherit.res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='category_id']" position="attributes">
+                    <attribute name="options">
+                        {'color_field': 'color', 'no_create_edit': True, 'no_create': True}
+                    </attribute>
+                </xpath>
+                <xpath expr="//notebook" position="inside">
+                    <page string="Sales Brand Configuration"
+                          groups="sales_brand_management.group_sales_brand_management">
+                        <group>
+                            <group>
+                                <field name="sales_perc"/>
+                                <field name="skip_tax" widget="boolean_toggle"/>
+                            </group>
+                            <group>
+                                <field name="partner_warehouse_ids" mode="list">
+                                    <list editable="bottom">
+                                        <field name="warehouse_id"
+                                               options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"/>
+                                        <field name="rent_amount"/>
+                                    </list>
+                                </field>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

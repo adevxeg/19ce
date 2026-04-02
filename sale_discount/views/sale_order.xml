@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="view_inherit_sale_order_form" model="ir.ui.view">
+            <field name="name">view.inherit.sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="sale_discount_type" invisible="1"/>
+                </xpath>
+                <xpath expr="//button[@name='action_open_discount_wizard'][1]" position="replace">
+                    <button
+                        name="action_open_discount_wizard"
+                        type="object"
+                        class="btn btn-secondary"
+                        groups="sale.group_discount_per_so_line"
+                        invisible="state != 'draft'">
+                        Discount
+                        <span invisible="sale_discount_type != 'adevx'">
+                            (<field name="total_discount"/>)
+                        </span>
+                    </button>
+                </xpath>
+                <xpath expr="//field[@name='order_line']//list/field[@name='discount']" position="attributes">
+                    <attribute name="digits">[16, 2]</attribute>
+                    <attribute name="readonly">parent.sale_discount_type != 'standard'</attribute>
+                    <attribute name="force_save">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']//list/field[@name='discount']" position="after">
+                    <field name='amount_discount' optional="hide"
+                           column_invisible="parent.sale_discount_type != 'adevx'"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

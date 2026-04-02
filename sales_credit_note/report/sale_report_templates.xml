@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <template id="inherit_report_saleorder_document" inherit_id="sale.report_saleorder_document">
+            <xpath expr="//div[@id='informations']" position="inside">
+                <div t-if="doc.warehouse_id.name" class="col-auto col-3 mw-100 mb-2">
+                    <strong>Warehouse:</strong>
+                    <br/>
+                    <span class="m-0" t-field="doc.warehouse_id.name"/>
+                </div>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

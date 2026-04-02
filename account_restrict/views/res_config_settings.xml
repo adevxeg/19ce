@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="view_inherit_res_config_settings_form" model="ir.ui.view">
+            <field name="name">view.inherit.res.config.settings.form</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="adevx_base.view_inherit_res_config_settings_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='accounting']" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                </xpath>
+                <xpath expr="//page[@name='accounting']//block[@id='accounting_general']" position="inside">
+                    <setting help="Restrict Journal (cash, bank) Negative Balance">
+                        <field name="restrict_journal_negative_balance"/>
+                    </setting>
+                </xpath>
+                <xpath expr="//page[@name='accounting']//block[@id='accounting_general']" position="after">
+                    <block title="Credit Note" id="accounting_credit_note">
+                        <setting help="Credit Note Validate Sold Qty">
+                            <field name="allow_credit_note_validate_sold_qty"/>
+                        </setting>
+                        <setting string="Credit Note Product Domain By Customer"
+                                 help="Restrict Product Domain By products From Sale Order Line With Order Customer Equal Credit Note Customer.">
+                            <field name="credit_note_by_customer"/>
+                        </setting>
+                    </block>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

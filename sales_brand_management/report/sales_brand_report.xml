@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="action_sales_brand_report_html" model="ir.actions.report">
+            <field name="name">Sales Brand Report</field>
+            <field name="model">sales.brand.report</field>
+            <field name="report_type">qweb-html</field>
+            <field name="report_name">sales_brand_management.sales_brand_report_html</field>
+            <field name="report_file">sales_brand_management.sales_brand_report_html</field>
+        </record>
+        <template id="sales_brand_report_html">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <t t-set="docs" t-value="env['sales.brand.report'].browse(detail_ids)"/>
+                    <div class="o_inventory_reports_page">
+                        <t t-call="sales_brand_management.report_sales_brand_template"/>
+                    </div>
+                </t>
+            </t>
+        </template>
+        <template id="report_sales_brand_template">
+            <div class="page">
+                <div class="row">
+                    <h4 class="mt0" style="text-align: center;">
+                        <span>Sales Brand Report</span>
+                    </h4>
+                </div>
+                <!-- Display filters -->
+                <t t-call="sales_brand_management.report_sales_brand_filters"/>
+                <!-- Display table data -->
+                <div class="act_as_table data_table mt4" style="width: 100%;">
+                    <!-- Display header line-->
+                    <t t-call="sales_brand_management.report_sales_brand_header"/>
+                    <!-- Display lines -->
+                    <t t-if="docs">
+                        <t t-call="sales_brand_management.report_sales_brand_lines"/>
+                    </t>
+                </div>
+                <p style="page-break-before:always;"/>
+            </div>
+        </template>
+        <template id="report_sales_brand_filters">
+            <div class="act_as_table data_table" style="width: 100%;">
+                <div class="act_as_row labels">
+                    <div class="act_as_cell">Start Date</div>
+                    <div class="act_as_cell">End Date</div>
+                    <div class="act_as_cell">Partners</div>
+                </div>
+                <div class="act_as_row">
+                    <div class="act_as_cell">
+                        <span t-out="start_date"/>
+                    </div>
+                    <div class="act_as_cell">
+                        <span t-out="end_date"/>
+                    </div>
+                    <div class="act_as_cell">
+                        <t t-out="partner_names"/>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <template id="report_sales_brand_header">
+            <div class="act_as_thead">
+                <div class="act_as_row labels">
+                    <div class="act_as_cell">Date</div>
+                    <div class="act_as_cell">Partner</div>
+                    <div class="act_as_cell">Commission Amount</div>
+                    <div class="act_as_cell">Tax Amount</div>
+                </div>
+            </div>
+        </template>
+        <template id="report_sales_brand_lines">
+            <t t-set="total_lines" t-value="len(docs)"/>
+            <t t-set="partner_id" t-value="False"/>
+            <t t-set="total_commission" t-value="0"/>
+            <t t-set="partner_total_commission" t-value="0"/>
+            <t t-set="total_tax" t-value="0"/>
+            <t t-set="partner_total_tax" t-value="0"/>
+            <t t-foreach="docs" t-as="doc">
+                <!-- Total -->
+                <t t-if="partner_id != doc.partner_id and partner_id">
+                    <div class="act_as_row lines">
+                        <div class="act_as_cell left"/>
+                        <div class="act_as_cell left" style="font-weight: bold !important;background-color: #f0f0f0;">
+                            <t t-out="partner_id.name"/>
+                        </div>
+                        <div class="act_as_cell right" style="font-weight: bold !important;background-color: #f0f0f0;">
+                            <t t-out="'{0:,.2f}'.format(partner_total_commission)"/>
+                        </div>
+                        <div class="act_as_cell right" style="font-weight: bold !important;background-color: #f0f0f0;">
+                            <t t-out="'{0:,.2f}'.format(partner_total_tax)"/>
+                        </div>
+                    </div>
+                    <!-- Reset Count -->
+                    <t t-set="partner_total_commission" t-value="0"/>
+                    <t t-set="partner_total_tax" t-value="0"/>
+                </t>
+                <!-- Line -->
+                <div class="act_as_row lines">
+                    <div class="act_as_cell left">
+                        <t t-out="doc.date.strftime('%Y-%m-%d')"/>
+                    </div>
+                    <div class="act_as_cell left">
+                        <t t-out="doc.partner_id.name"/>
+                    </div>
+                    <div class="act_as_cell right">
+                        <t t-out="'{0:,.2f}'.format(doc.commission_amount)"/>
+                    </div>
+                    <div class="act_as_cell right">
+                        <t t-out="'{0:,.2f}'.format(doc.tax_amount)"/>
+                    </div>
+                </div>
+                <!-- Count -->
+                <t t-set="partner_id" t-value="doc.partner_id"/>
+                <t t-set="total_commission" t-value="total_commission + doc.commission_amount"/>
+                <t t-set="partner_total_commission" t-value="partner_total_commission + doc.commission_amount"/>
+                <t t-set="total_tax" t-value="total_tax + doc.tax_amount"/>
+                <t t-set="partner_total_tax" t-value="partner_total_tax + doc.tax_amount"/>
+                <t t-if="docs[-1] == doc">
+                    <div class="act_as_row lines">
+                        <div class="act_as_cell left"/>
+                        <div class="act_as_cell left" style="font-weight: bold !important;background-color: #f0f0f0;">
+                            <t t-out="partner_id.name"/>
+                        </div>
+                        <div class="act_as_cell right" style="font-weight: bold !important;background-color: #f0f0f0;">
+                            <t t-out="'{0:,.2f}'.format(partner_total_commission)"/>
+                        </div>
+                        <div class="act_as_cell right" style="font-weight: bold !important;background-color: #f0f0f0;">
+                            <t t-out="'{0:,.2f}'.format(partner_total_tax)"/>
+                        </div>
+                    </div>
+                    <div class="act_as_row labels">
+                        <div class="act_as_cell left"/>
+                        <div class="act_as_cell left" style="font-weight: bold !important;">
+                            All Active Partners
+                        </div>
+                        <div class="act_as_cell right" style="font-weight: bold !important;">
+                            <t t-out="'{0:,.2f}'.format(total_commission)"/>
+                        </div>
+                        <div class="act_as_cell right" style="font-weight: bold !important;">
+                            <t t-out="'{0:,.2f}'.format(total_tax)"/>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>
