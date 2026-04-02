@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="account_reports.profit_and_loss" model="account.report">
+            <field name="custom_handler_model_id" ref="model_account_report_custom_handler_unified"/>
+        </record>
+
+    </data>
+</odoo>

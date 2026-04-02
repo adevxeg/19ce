@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="inherit_report_invoice_document" inherit_id="account.report_invoice_document">
+        <xpath expr="//t[@t-if='print_with_payments']" position="before">
+            <tr class="border-black o_total" t-if="o.move_type == 'out_invoice'">
+                <td>
+                    <strong>Partner Balance</strong>
+                </td>
+                <td class="text-end">
+                    <span t-field="o.partner_balance"/>
+                </td>
+            </tr>
+        </xpath>
+    </template>
+
+</odoo>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="view_inherit_account_payment_register_form" model="ir.ui.view">
+            <field name="name">view.inherit.account.payment.register.form</field>
+            <field name="model">account.payment.register</field>
+            <field name="inherit_id" ref="account.view_account_payment_register_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group//group[@name='group2']" position="inside">
+                    <field name="season_id" options="{'no_create_edit':True, 'no_open':True, 'no_create':True}"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>
